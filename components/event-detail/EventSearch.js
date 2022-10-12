@@ -19,8 +19,8 @@ export default function EventSearch(props) {
         <div className={classes.control}>
           <label htmlFor="year">Year</label>
           <select id="year" ref={yearInputRef}>
-            <option value="2001">2001</option>
-            <option value="2002">2002</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
           </select>
         </div>
         <div className={classes.control}>
