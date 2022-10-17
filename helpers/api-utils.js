@@ -55,3 +55,8 @@ export async function getFilteredEvents(dateFilter) {
 
   return filteredEvents;
 }
+
+export async function getEventById(id) {
+  const events = await getAllEvents();
+  return events.find((event) => event.id === id);
+}

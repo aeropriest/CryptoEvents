@@ -4,12 +4,14 @@ import classes from "./Button.module.css";
 export default function Button(props) {
   console.log("button ", props);
   if (props.link) {
-    <Link href={props.link}>
-      <a className={classes.btn}>{props.children}</a>
-    </Link>;
+    return (
+      <Link href={props.link}>
+        <a className={classes.btn}>{props.children}</a>
+      </Link>
+    );
   }
   return (
-    <button onClick={props.onClick} className={classes.btn}>
+    <button className={classes.btn} onClick={props.onClick}>
       {props.children}
     </button>
   );
