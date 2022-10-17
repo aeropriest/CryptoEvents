@@ -1,5 +1,4 @@
 import EventList from "../components/events/EventList";
-import { useEffect, useState } from "react";
 import {
   getFeaturedEvents,
   getFeaturedEventsDirect,
@@ -21,5 +20,6 @@ export async function getStaticProps() {
     props: {
       events: featuredEvents,
     },
+    revalidate: 600,
   };
 }
