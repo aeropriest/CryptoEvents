@@ -1,20 +1,32 @@
-import { Fragment, useRef } from "react";
+import { Fragment, useRef, useState } from "react";
 import classes from "./new-comment.module.css";
 
 export default function NewComment() {
+
+  const [isInvalid, setIsInvalid] = useState(false)
   function handleSubmit(evemt) {}
   const emailRef = useRef();
   const nameReft = useRef();
   const commentRef = useRef();
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="email">Your E-mail</label>
-      <input ref={emailRef} id="email"></input>
-      <label htmlFor="name">Your E-mail</label>
-      <input ref={emailRef} id="name"></input>
-      <label htmlFor="comment">Your Comment</label>
-      <textarea id="comment" ref={commentRef} rows="5"></textarea>
-    </form>
+    <form className={classes.form}>
+    <div className={classes.row}>
+      <div className={classes.control}>
+        <label htmlFor='email'>Your email</label>
+        <input type='email' id='email' ref={emailRef} />
+      </div>
+      <div className={classes.control}>
+        <label htmlFor='name'>Your name</label>
+        <input type='text' id='name' ref={nameReft} />
+      </div>
+    </div>
+    <div className={classes.control}>
+      <label htmlFor='comment'>Your comment</label>
+      <textarea id='comment' rows='5' ref={commentRef}></textarea>
+    </div>
+    {isInvalid && <p>Please enter a valid email address and comment!</p>}
+    <button className={classes.form}>Submit</button>
+  </form>
   );
 }

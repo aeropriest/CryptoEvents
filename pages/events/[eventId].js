@@ -1,4 +1,4 @@
-import { Fragment, useRef } from "react";
+import { Fragment, useRef, useState } from "react";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventLogistics from "../../components/event-detail/event-logistics";
 import EventContent from "../../components/event-detail/event-content";
@@ -16,6 +16,15 @@ export default function EventDetailsPage(props) {
   const emailRef = useRef();
   const nameReft = useRef();
   const commentRef = useRef();
+
+  const [showComments, setShowComments] = useState(false)
+
+  function handleShowComments(){
+    console.log('show comments', showComments)
+    fetch('/api/comments').then((response)=> response.json()).then((data)=>console.log(data))
+    setShowComments(!showComments)
+  }
+
   return (
     <Fragment>
       <EventSummary title={eventDetail.title} />
@@ -28,7 +37,7 @@ export default function EventDetailsPage(props) {
       <EventContent>
         <p>{eventDetail.description}</p>
       </EventContent>
-      <button>Show Comments</button>
+      <button onClick={handleShowComments}>{showComments ? 'Hide ' : 'Show '} Comments</button>
       <NewComment />
     </Fragment>
   );
