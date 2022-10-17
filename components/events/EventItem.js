@@ -17,6 +17,9 @@ export default function EventItem(props) {
   const exporeLink = `/events/${id}`;
   console.log(image);
 
+  const function handleOnClick(){
+    console.log('handleOnClick')
+  }
   return (
     <li className={classes.item}>
       <img src={"/" + image} />
@@ -33,7 +36,7 @@ export default function EventItem(props) {
           </div>
         </div>
         <div className={classes.actions}>
-          <Button link={exporeLink}>
+          <Button link={exporeLink} onClick={handleOnClick}>
             <span>Explore Event</span>
             <span className={classes.icon}>
               <ArrowRightIcon />
