@@ -1,8 +1,9 @@
-import { Fragment } from "react";
+import { Fragment, useRef } from "react";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventLogistics from "../../components/event-detail/event-logistics";
 import EventContent from "../../components/event-detail/event-content";
 import { getFeaturedEvents, getEventById } from "../../helpers/api-utils";
+import NewComment from "../../components/input/new-comment";
 
 export default function EventDetailsPage(props) {
   const eventDetail = props.selectedEvent;
@@ -12,7 +13,9 @@ export default function EventDetailsPage(props) {
   }
 
   //console.log(eventDetail);
-
+  const emailRef = useRef();
+  const nameReft = useRef();
+  const commentRef = useRef();
   return (
     <Fragment>
       <EventSummary title={eventDetail.title} />
@@ -25,6 +28,8 @@ export default function EventDetailsPage(props) {
       <EventContent>
         <p>{eventDetail.description}</p>
       </EventContent>
+      <button>Show Comments</button>
+      <NewComment />
     </Fragment>
   );
 }
