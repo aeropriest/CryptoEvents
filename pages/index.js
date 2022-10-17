@@ -11,7 +11,16 @@ export default function HomePage(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    console.log(emailRef.current.value);
+    const email = emailRef.current.value
+    const reqBody = {email: email}
+    console.log(email);
+    fetch('/api/newsletter',{
+      method: 'POST',
+      body: JSON.stringify(reqBody),
+      headers:{
+        'Content-Type': 'application/json'
+      }
+    }).then((response)=> response.json()).then((data)=>console.log(data))
   }
 
   return (
