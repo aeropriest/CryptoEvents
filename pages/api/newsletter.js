@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import {MongoClient} from 'mongodb'
+import { ConnectDb, insertDocument } from '../../helpers/db-utils';
 
 export default async function handler(req, res) {
   console.log('handle newsletter subscrition')
@@ -12,10 +12,21 @@ export default async function handler(req, res) {
       return;
     }
 
-    const client = await MongoClient.connect('mongodb+srv://ashokjaiswal:hUWzNObFsCD4xIPT@cluster0.utylnvp.mongodb.net/events?retryWrites=true&w=majority')
-    const db = client.db();
-    await db.collection('newsletter').insertOne({email: email})
-    client.close();
+    let client;
+    try{
+      client = await ConnectDb()
+    }catch(error){
+      res.status(500).json({message: 'Database Connection Failed'})
+      return
+    }
+
+    try{
+      await insertDocument(client, 'newsletter', {email: email})
+      client.close()
+    }catch(error){
+      res.status(500).json({message: 'Inserting data failed'})
+      return
+    }
 
     res.status(201).json({ reply: `Thank you for subscribing ${email}` })
   }else{

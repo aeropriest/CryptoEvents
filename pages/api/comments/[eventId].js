@@ -1,16 +1,26 @@
-import {MongoClient} from 'mongodb'
-
+import { ConnectDb, insertDocument, getDocument } from "../../../helpers/db-utils";
 
 export default async function handler(req, res) {
-  const eventId = req.query.eventId
-    console.log('handle comments for event', eventId)
-    if( req.method === 'POST'){
+  
+    const eventId = req.query.eventId
+    let client;
+    try{
+      client = await ConnectDb()
+    }catch(error){
+      res.status(500).json({message: 'Database Connection Failed'})
+      return
+    }
 
+    console.log('handle comments for event', eventId)
+
+
+    if( req.method === 'POST'){
       //check if entered data is correct
       const {email, name, comment} = req.body
 
       if( !name || name.trim() ==='' || !email.includes('@')|| !email || !comment || comment.trim() ===''){
         res.status(422).jason({message: 'Invlaide input'})
+        client.close();
         return;  
       }
 
@@ -23,22 +33,28 @@ export default async function handler(req, res) {
 
       console.log(newComment)
 
-      const client = await MongoClient.connect('mongodb+srv://ashokjaiswal:hUWzNObFsCD4xIPT@cluster0.utylnvp.mongodb.net/events?retryWrites=true&w=majority')
-      const db = client.db();
-      const result = await db.collection('comments').insertOne(newComment)
-      console.log(result)
-      client.close();
+      let result;
+      try{
+        result = await insertDocument(client, 'comments', newComment)
+        
+        newComment._id = result.insertedId
+        res.status(201).json({ message: `Thank you for your comments `, comment: newComment })
 
-      
-      res.status(201).json({ message: `Thank you for your comments `, comment: newComment })
+      }catch(error){
+        res.status(500).json({message: 'Inserting comments failed'})        
+      }
     }
     
     if( req.method === 'GET'){
-      const commentsList = [
-        {id:'c1', email:'a@s.com', name: 'Sir A', comment: 'First comment'},
-        {id:'c1', email:'a@s.com', name: 'Mister B', comment: 'Second Comment'},
-        {id:'c1', email:'a@s.com', name: 'Lady C', comment: 'Thrid Comment'},
-      ]
-      res.status(200).json({ comments: commentsList })
+
+      try{
+        const documents = await getDocument(client, 'comments')
+        res.status(200).json({ comments: documents })
+      }catch(error){
+        res.status(500).json({message: 'Failed to get document'})        
+      }
+      
     }
+
+    client.close();
   }

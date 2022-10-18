@@ -17,9 +17,10 @@ export default function Comments(props){
         fetchComments();
     },[showComments])
 
+    console.log('loaded commented', commentsList)
 
     function addCommentHandler(commentData){
-        console.log('addCommentHandler', commentData)
+        console.log('addCommentHandler called')
         console.log(props)
         //send the data to APIs
         fetch('/api/comments/'+eventId, {
