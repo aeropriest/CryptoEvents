@@ -6,7 +6,8 @@ export default function handler(req, res) {
     console.log(req.body.email)
     const email = req.body.email;
     if( !email || !email.includes('@') ){
-      res.status().jason({error: 'Invlaide email format'})
+      res.status(422).jason({error: 'Invlaide email format'})
+      return;
     }
     //console.log('Sign user up for ', email)
     res.status(201).json({ reply: `Thank you for subscribing ${email}` })
