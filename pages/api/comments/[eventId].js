@@ -1,8 +1,11 @@
+import {MongoClient} from 'mongodb'
 
-export default function handler(req, res) {
+
+export default async function handler(req, res) {
   const eventId = req.query.eventId
     console.log('handle comments for event', eventId)
     if( req.method === 'POST'){
+
       //check if entered data is correct
       const {email, name, comment} = req.body
 
@@ -12,13 +15,21 @@ export default function handler(req, res) {
       }
 
       const newComment = {
-        id: new Date().toISOString(),
         name: name,
         email: email,
         comment: comment,
+        eventId: eventId
       }
 
       console.log(newComment)
+
+      const client = await MongoClient.connect('mongodb+srv://ashokjaiswal:hUWzNObFsCD4xIPT@cluster0.utylnvp.mongodb.net/events?retryWrites=true&w=majority')
+      const db = client.db();
+      const result = await db.collection('comments').insertOne(newComment)
+      console.log(result)
+      client.close();
+
+      
       res.status(201).json({ message: `Thank you for your comments `, comment: newComment })
     }
     

@@ -8,7 +8,7 @@ import Comments from "../../components/input/comments";
 
 export default function EventDetailsPage(props) {
   const eventDetail = props.selectedEvent;
-  console.log('event details for ', eventDetail.id)
+
   if (!eventDetail) {
     return <p>Event id not found</p>;
   }
