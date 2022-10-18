@@ -12,18 +12,20 @@ export default function NewComment(props) {
 
 
   function NewCommentHandler(){
-    
+    console.log('comment =ahndler')
     if( !emailRef || !nameRef || !commentRef ){
       setIsInvalid(true)
     }
+    props.onAddComment(
+      {
+      name: nameRef.current.value,
+      eamil: emailRef.current.value,
+      comment: commentRef.current.value
+    
+  })
   }
 
-//   props.onAddComment({
-//   //   name: nameRef.current.value,
-//   //   eamil: emailRef.current.value,
-//   //   comment: commentRef.current.value
-//   // 
-// })
+  
 
   return (
     <form className={classes.form} onSubmit={NewCommentHandler}>
