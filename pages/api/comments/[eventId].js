@@ -9,7 +9,7 @@ export default async function handler(req, res) {
       //check if entered data is correct
       const {email, name, comment} = req.body
 
-      if( !name || name.trim() ==='' || !email.include('@')|| !email || !text || text.trim() ===''){
+      if( !name || name.trim() ==='' || !email.includes('@')|| !email || !comment || comment.trim() ===''){
         res.status(422).jason({message: 'Invlaide input'})
         return;  
       }

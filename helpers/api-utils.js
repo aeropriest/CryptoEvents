@@ -6,14 +6,10 @@ export async function getFeaturedEvents() {
 export async function getFeaturedEventsDirect() {
   const allEvents = await getAllEvents();
   return allEvents.filter((event) => event.isFeatured === true);
-  console.log(
-    "----------------------- getFeaturedEventsDirect -------------------"
-  );
   const res = await fetch(
     "https://cryptoevents-54df6-default-rtdb.firebaseio.com/Events.json?isFeatured=true"
   );
   const data = await res.json();
-  console.log("all events data ", data);
   const events = [];
   for (const key in data) {
     events.push({
@@ -21,7 +17,6 @@ export async function getFeaturedEventsDirect() {
       ...data[key],
     });
   }
-  console.log("getFeaturedEventsDirect, ", events);
   return events;
 }
 
@@ -30,7 +25,6 @@ export async function getAllEvents() {
     "https://cryptoevents-54df6-default-rtdb.firebaseio.com/Events.json"
   );
   const data = await res.json();
-  console.log("all events data ", data);
   const events = [];
   for (const key in data) {
     events.push({
@@ -38,7 +32,6 @@ export async function getAllEvents() {
       ...data[key],
     });
   }
-  console.log("getAllEvents, ", events);
   return events;
 }
 
