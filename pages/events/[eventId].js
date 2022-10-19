@@ -1,24 +1,18 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef } from "react";
 import EventSummary from "../../components/event-detail/event-summary";
 import EventLogistics from "../../components/event-detail/event-logistics";
 import EventContent from "../../components/event-detail/event-content";
 import { getFeaturedEvents, getEventById } from "../../helpers/api-utils";
 import NewComment from "../../components/input/new-comment";
-import Comments from "../../components/input/comments";
 
 export default function EventDetailsPage(props) {
   const eventDetail = props.selectedEvent;
-
+  //console.log("params are", props);
   if (!eventDetail) {
     return <p>Event id not found</p>;
   }
 
   //console.log(eventDetail);
-  const emailRef = useRef();
-  const nameReft = useRef();
-  const commentRef = useRef();
-
-
   return (
     <Fragment>
       <EventSummary title={eventDetail.title} />
@@ -31,7 +25,8 @@ export default function EventDetailsPage(props) {
       <EventContent>
         <p>{eventDetail.description}</p>
       </EventContent>
-      <Comments eventId={eventDetail.id}/>
+      <button>Show Comments</button>
+      <NewComment />
     </Fragment>
   );
 }
