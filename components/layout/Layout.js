@@ -6,6 +6,7 @@ export default function Layout(props) {
     <Fragment>
       <MainHeader />
       <main>{props.children}</main>
+      <Notification title="Test" message="This is a test" status="error" />
     </Fragment>
   );
 }
