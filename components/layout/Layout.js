@@ -5,7 +5,6 @@ import NotificationContext from "../../store/notification-context";
 export default function Layout(props) {
   const notificationCtx = useContext(NotificationContext);
   const activeNotification = notificationCtx.notification;
-
   return (
     <Fragment>
       <MainHeader />
